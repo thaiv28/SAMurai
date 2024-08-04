@@ -57,25 +57,19 @@ def send_sam_request(terms):
     
     return search
 
-def get_dates():
-    f = open("../files/dates.txt", "r")
-    
-    dates = f.readlines()
-    dates = [date.strip() for date in dates]
-    return dates
-
 def main():
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     
-    contracts = []
   
-    dates = get_dates()
+    dates = utils.get_dates()
     logger.debug(dates)
     
     for date in dates:
-        terms = init_search_terms(ncode=541330, ptype=['r', 'o', 's', 'k'], posted_from=date,
-                                posted_to=date)
+        dt = datetime.datetime.strptime(date, "%m-%d-%Y")
+        date_formatted = dt.strftime("%m/%d/%Y")
+        terms = init_search_terms(ncode=541330, ptype=['r', 'o', 's', 'k'], 
+                                  posted_from=date_formatted, posted_to=date_formatted)
         search = send_sam_request(terms)
     
         logger.debug(search)
@@ -84,19 +78,20 @@ def main():
         results_json = response.json()
         
         if response.status_code != httpx.codes.OK:
-            logger.critical(results_json.get('error').get('message'))
+            logger.critical(response.text)
             exit(1)
     
         logger.debug(results_json) 
         # sets contracts to a list of dictionaries, one for each contract
-        contracts += results_json['opportunitiesData']
+        contracts = results_json['opportunitiesData']
     
         logger.debug("\n".join([d.get("title") for d in contracts[-10:]]))
         
-        time.sleep(random.randint(0, 2))
+        time.sleep(random.uniform(0.2, 2))
        
         df = pd.DataFrame.from_records(contracts) 
-        df.to_csv(f"../files/temp/{date}.csv")
+        df = df.rename(columns={"description":"descriptionURL"})
+        df.to_csv(f"../../files/api_results/{date}.csv", index=False)
   
     # preprocess data
     logger.info(df) 

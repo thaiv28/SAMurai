@@ -19,6 +19,13 @@ def send_request(url: str):
         
     return request
 
+def get_dates():
+    f = open("../../files/dates.txt", "r")
+    
+    dates = f.readlines()
+    dates = [date.strip() for date in dates]
+    return dates
+
 def write_df_to_csv(df: pd.DataFrame): 
     logger.debug(f"Starting write csv to disk")
     df.index.name = "index" 
