@@ -37,24 +37,17 @@ class Preproccessor:
 
         return " ".join(filtered)
 
+# DEPRECATED: moved to pipeline
 def preprocess_vectorize(df):
     logger = logging.getLogger(__name__)
-    
-    logger.info("Combining description and attachments into text column")
-    df['text'] = df.Description.str.cat(df.Attachments, na_rep="")
-   
-    logger.debug(df['Description']) 
-    logger.debug(df['Attachments'])
-    logger.debug(df['text'])
     
     vectorizer = TfidfVectorizer(preprocessor=Preproccessor(), tokenizer=LemmaTokenizer())
     logger.info("Fitting vectorizer and transforming text")
     logger.info(len(df.text))
-    list = vectorizer.fit_transform(df['text'])
-
-    print(type(list[0]))
+    vectorized_text = vectorizer.fit_transform(df['text'])
 
     # TODO: save vectorizer as pickle file to be used during inference
+ 
 
     return (df, vectorizer)
 
