@@ -2,7 +2,7 @@ import logging
 
 def setup_logger():
 	logger = logging.getLogger()
-	logger.setLevel(logging.INFO)
+	logger.setLevel(logging.DEBUG)
 
 	# create console handler
 	ch = logging.StreamHandler()

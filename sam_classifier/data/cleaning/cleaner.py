@@ -7,7 +7,7 @@ class Cleaner:
         pass
     
     def fit(self, X, Y):
-        pass
+        return self
     
-    def transform(self, X, y):
+    def transform(self, X):
         return helpers.clean_data(X)

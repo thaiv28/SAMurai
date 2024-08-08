@@ -28,11 +28,19 @@ def remove_columns(df: pd.DataFrame):
 
 def remove_duplicate_rows(df: pd.DataFrame):
     logger = logging.getLogger(__name__)
-   
+  
     new_df = df.drop_duplicates("Title", keep="last")
     logger.info(f"Removed duplicate rows. Dataset size {len(df)} to {len(new_df)}")
     
     return new_df
+
+def remove_na(df: pd.DataFrame):
+    logger = logging.getLogger(__name__)
+    
+    new_df = df.dropna(subset=["text"])
+    logger.info(f"Removed rows with NaN in text. Dataset size {len(df)} to {len(new_df)} ")
+    
+    return new_df 
 
 
 def rearrange_columns(df: pd.DataFrame):
@@ -43,17 +51,19 @@ def rearrange_columns(df: pd.DataFrame):
     
     logger.info("Combining description and attachments into text column")
     df['text'] = df.Title.str.cat([df.Description, df.Attachments], na_rep="")
-    df = df.drop(columns=["Title", "Description", "Attachments"])
+    df = df.drop(columns=["Description", "Attachments"])
     
     return df
     
 def clean_data(df: pd.DataFrame):
     logger = logging.getLogger(__name__)
-    logger.info(f"Beginning clean data")
+    logger.info(f"Beginning clean data. Dataset size is {len(df)}")
     df = remove_columns(df)
     df = rearrange_columns(df)
     df = remove_duplicate_rows(df)
-    logger.info(f"Finished cleaning data")
+    df = remove_na(df)
+    logger.info(f"Finished cleaning data. Final dataset:\n {df}")
+    logger.debug(f"Columns are {df.columns}")
     
     return df
 
