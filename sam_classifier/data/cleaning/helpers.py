@@ -37,7 +37,7 @@ def remove_duplicate_rows(df: pd.DataFrame):
 def remove_na(df: pd.DataFrame):
     logger = logging.getLogger(__name__)
     
-    new_df = df.dropna(subset=["text"])
+    new_df = df.dropna()
     logger.info(f"Removed rows with NaN in text. Dataset size {len(df)} to {len(new_df)} ")
     
     return new_df 
@@ -61,7 +61,7 @@ def clean_data(df: pd.DataFrame):
     df = remove_columns(df)
     df = rearrange_columns(df)
     df = remove_duplicate_rows(df)
-    df = remove_na(df)
+    # DEPRECATED (using imputed values now): df = remove_na(df)
     logger.info(f"Finished cleaning data. Final dataset:\n {df}")
     logger.debug(f"Columns are {df.columns}")
     

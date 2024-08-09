@@ -6,7 +6,7 @@ class Cleaner:
     def __init__(self):
         pass
     
-    def fit(self, X, Y):
+    def fit(self, X):
         return self
     
     def transform(self, X):
