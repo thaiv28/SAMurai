@@ -2,7 +2,7 @@
 # SAMurai
 <p align="center">
 
-  <img src="/docs/images/samurai.jpeg" alt="Samurai looking through contracts" width="400"/>
+  <img src="/docs/images/samurai.jpeg" alt="Samurai looking through contracts" width="300"/>
 </p>
 
 SAMurai is a machine learning model that is used to classify government contracts
