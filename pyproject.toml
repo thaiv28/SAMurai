@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sam-classifier"
+name = "SAMurai"
 version = "0.1.0"
 description = ""
 authors = ["Thai Villaluna <thaivillaluna@gmail.com>"]
