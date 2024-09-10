@@ -1,7 +1,9 @@
-# SAMurai
 
-<center><img src="/docs/images/samurai.jpeg" alt="Samurai looking through contracts" width="200"/>
-</center>
+# SAMurai
+<p align="center">
+
+  <img src="/docs/images/samurai.jpeg" alt="Samurai looking through contracts" width="300"/>
+</p>
 
 SAMurai is a machine learning model that is used to classify government contracts
 from [SAM.gov](https://sam.gov/content/home) based on their suitability for a specific company.
