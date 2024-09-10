@@ -9,8 +9,10 @@ import samurai.data.mining.web_scraper as web_scraper
 from samurai.logger import setup_logger
 import samurai.data.mining.utils as utils
 
+ARCHIVE_LOCATION = ""
+
 def filter_raw_archives():
-    with codecs.open("/Users/thaivillaluna/Downloads/sam_archive.csv", 'r', encoding='utf-8',
+    with codecs.open(ARCHIVE_LOCATION, 'r', encoding='utf-8',
                  errors='ignore') as fdata:
         df = pd.read_csv(StringIO(fdata.read()), low_memory=False, index_col=0)
     df = df[df["NaicsCode"] == "541330"]
@@ -62,6 +64,7 @@ def split_into_dates():
 
 def main():
     setup_logger()
+    filter_raw_archives()
     split_into_dates()
     scrape_archive_urls()
 
